@@ -96,7 +96,7 @@ function App() {
                   <img src={foodImg} alt=""/>
                 </div>
                 <div className="recipe-link">
-                  <Link to="#" target="_blank">Watch Video</Link>
+                  <Link className="recipe-link-a" to="#" target="_blank">Watch Video</Link>
                 </div>
               </div>
             </div>
