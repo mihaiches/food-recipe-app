@@ -1,5 +1,5 @@
 import './MealDetails.css'
-import foodImg from './images/food.jpg';
+import foodImg from '../images/food.jpg';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes} from '@fortawesome/free-solid-svg-icons'
@@ -30,7 +30,7 @@ export default function MealDetails(){
                 ipsum. Proin a justo blandit, interdum mauris id, molestie </p>
             </div>
             <div className="recipe-meal-img">
-                <img src={foodImg} alt=""/>
+                <img src={foodImg} alt="foodImage"/>
             </div>
             <div className="recipe-link">
                 <Link className="recipe-link-a" to="#" target="_blank">Watch Video</Link>
