@@ -17,6 +17,7 @@ function App() {
   // const [getMeal, setGetMeal] = useState("");
 
   const [meals, setMeals] = useState([]);
+  const [error, setError] = useState();
 
   // useState variant for reading searched ingredient
   // function handleMeal(event){
@@ -24,7 +25,8 @@ function App() {
   // }
 
   function handleGettingIngredient() {
-    const searchedIngredient = mealValue.current.value;
+    const searchedIngredient = mealValue.current.value.trim();
+    setError(null);
 
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchedIngredient}`)
     .then((response) => {
@@ -39,6 +41,8 @@ function App() {
          }
        });
        setMeals(transformedMeals);
+      }).catch((error) => {
+        console.error('Error:', error);
       });
 
   }
@@ -76,7 +80,10 @@ function App() {
 
             <div className="meal-result">
               <h2 className="title">Your Search Results:</h2>
-              <div id="meal">
+
+              {error && <p>Sorry, we didn't find any meal.</p>}
+
+              {!error ? <div id="meal">
                 {meals.map((meal) => {
                   return(
                 <MealItem 
@@ -86,7 +93,8 @@ function App() {
                 />
                   )
                 })}
-              </div>
+              </div> : <p>Sorry, we didn't find any meal.</p>}
+
             </div>      
 
             <MealDetails/>
