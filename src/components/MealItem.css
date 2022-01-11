@@ -3,9 +3,6 @@
     --secondar-clr: #f4a261;
 }
 
-#meal{
-    margin: 2.4rem 0;
-}
 .meal-item{
     border-radius: 1rem;
     -webkit-border-radius: 1rem;
@@ -49,4 +46,14 @@
 }
 .recipe-btn:hover{
     background: var(--secondar-clr);
+}
+
+
+@media screen and (min-width: 768px){
+    .meal-item{
+        margin: 0;
+    }
+    .meal-details{
+        width: 700px;
+    }
 }

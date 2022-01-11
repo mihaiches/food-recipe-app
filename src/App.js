@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import { useState , useRef} from 'react';
 
 import './App.css';
-import foodImg from './images/food.jpg';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { InputGroup , FormControl , Button } from 'react-bootstrap';
@@ -11,21 +9,38 @@ import MealDetails from './components/MealDetails';
 import MealItem from './components/MealItem';
 
 function App() {
-  const foodApi = 'www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast';
 
-  const [getMeal, setGetMeal] = useState();
-  const [searchedMeal, setSearchedMeal] = useState();
+  // useRef variant for reading searched ingredient
+  const mealValue = useRef(null);
 
-  function handleMeal(event){
-    const mealSearched = event.target.value;
+  // useState variant for reading searched ingredient
+  // const [getMeal, setGetMeal] = useState("");
 
-    setGetMeal(mealSearched);
-  }
+  const [meals, setMeals] = useState([]);
 
-  function handleSearch(){
-    setSearchedMeal(getMeal);
+  // useState variant for reading searched ingredient
+  // function handleMeal(event){
+  //   setGetMeal(event.target.value);
+  // }
 
-    console.log(searchedMeal)
+  function handleGettingIngredient() {
+    const searchedIngredient = mealValue.current.value;
+
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchedIngredient}`)
+    .then((response) => {
+      return response.json();
+      })
+      .then((data) => {
+       const transformedMeals = data.meals.map( (mealData) => {
+         return {
+           id: mealData.idMeal,
+           img: mealData.strMealThumb,
+           recipeName: mealData.strMeal
+         }
+       });
+       setMeals(transformedMeals);
+      });
+
   }
 
   return (
@@ -46,18 +61,33 @@ function App() {
               placeholder="Search..."
               aria-label="Search-bar"
               aria-describedby="basic-addon2"
-              onChange={handleMeal}
-              value={getMeal}
+              autoComplete='off'
+
+              // useState variant for reading searched ingredient
+              // onChange={handleMeal}
+              // value={getMeal}
+
+              ref={mealValue}
               />
-              <Button className='search-btn' onClick={handleSearch}>
+              <Button className='search-btn' onClick={handleGettingIngredient}>
                   <FontAwesomeIcon className='search-icon' icon={faSearch}/>
               </Button>
             </InputGroup>
 
             <div className="meal-result">
               <h2 className="title">Your Search Results:</h2>
-              <MealItem />
-            </div>            
+              <div id="meal">
+                {meals.map((meal) => {
+                  return(
+                <MealItem 
+                key={meal.id}
+                img={meal.img}
+                recipeName={meal.recipeName}
+                />
+                  )
+                })}
+              </div>
+            </div>      
 
             <MealDetails/>
 
