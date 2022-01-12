@@ -9,7 +9,7 @@ export default function MealDetails(){
     return(
         <div className="meal-details">
             {/* recipe close btn */}
-            <Button className="recipe-close-btn" id="recipe-close-btn">
+            <Button className="recipe-close-btn recipe-close-btn-id">
             <FontAwesomeIcon icon={faTimes}/>
             </Button>
 
