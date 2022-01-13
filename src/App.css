@@ -65,7 +65,10 @@ body{
 .search-control::placeholder{
     color: var(--main-clr);
 }
-.search-btn{
+.input-group .btn{
+    z-index: 0;
+}
+.search-button{
     width: 55px;
     height: 55px;
     font-size: 1.8rem;
@@ -80,7 +83,7 @@ body{
     -ms-transition: all 04.s linear;
     -o-transition: all 04.s linear;
 }
-.search-btn:hover{
+.search-button:hover{
     background: var(--secondar-clr);
 }
 .meal-result{

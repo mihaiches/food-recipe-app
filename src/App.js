@@ -13,7 +13,8 @@ function App() {
   const [meals, setMeals] = useState([]);
   const [mealRecipeDetail, setMealRecipeDetail] = useState([]);
   const [error, setError] = useState();
-
+  const [showDetails, setShowDetails] = useState(false);
+  
   // fetching the meals for the respective ingredinet with async/await
   async function handleGettingIngredient() {
     const searchedIngredient = mealValue.current.value.trim();
@@ -57,7 +58,21 @@ function App() {
         }
     });
     setMealRecipeDetail(transformedDetails);
-    console.log(mealRecipeDetail);
+    // show meal details when pressing on 'Get Recipe'
+
+    setShowDetails(true);
+  }
+
+  // remove the details when pressing 'X' button on the meal 
+  function handleRemoveDetails(){
+    setShowDetails(false);
+  }
+  
+  function handleKeyDown(event){
+    if(event.key === "Escape"){
+      console.log(event.key);
+      setShowDetails(false);
+    }
   }
 
 
@@ -82,7 +97,7 @@ function App() {
               autoComplete='off'
               ref={mealValue}
               />
-              <Button className='search-btn' onClick={handleGettingIngredient}>
+              <Button className='search-button' onClick={handleGettingIngredient}>
                   <FontAwesomeIcon className='search-icon' icon={faSearch}/>
               </Button>
             </InputGroup>
@@ -107,7 +122,23 @@ function App() {
               </div> : <p className="notFound">Sorry, we didn't find any meal.</p>}
             </div>      
 
-            <MealDetails/>
+            {showDetails && mealRecipeDetail.map((recipeDetials)=>{
+              return(
+              <MealDetails
+              key={recipeDetials.id}
+              id={recipeDetials.id}
+              name={recipeDetials.name}
+              category={recipeDetials.category}
+              instructions={recipeDetials.instructions}
+              img={recipeDetials.img}
+              link={recipeDetials.link}
+              onRemoveDetails={handleRemoveDetails}
+              onKeyRemoveDetails={handleKeyDown}
+              />
+              )
+            })}
+            
+            
 
           </div>
         </div>

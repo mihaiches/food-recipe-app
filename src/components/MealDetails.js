@@ -1,39 +1,29 @@
 import './MealDetails.css'
-import foodImg from '../images/food.jpg';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes} from '@fortawesome/free-solid-svg-icons'
 import { Button } from 'react-bootstrap';
 
-export default function MealDetails(){
+export default function MealDetails(props){
     return(
         <div className="meal-details">
             {/* recipe close btn */}
-            <Button className="recipe-close-btn recipe-close-btn-id">
+            <Button onClick={props.onRemoveDetails}  className="recipe-close-btn recipe-close-btn-id">
             <FontAwesomeIcon icon={faTimes}/>
             </Button>
 
             {/* meal content */}
             <div className="meal-details-content">
-            <h2 className="recipe-title">Meal Name Here</h2>
-            <p className="recipe-category">Category Name</p>
+            <h2 className="recipe-title">{props.name}</h2>
+            <p className="recipe-category">{props.category}</p>
             <div className="recipe-instruct">
                 <h3>Instructions:</h3>
-                <p>Donec nec felis vulputate, sollicitudin nunc nec, ornare 
-                ipsum. Proin a justo blandit, interdum mauris id, molestie 
-                nulla. Ut sed cursus justo. Nam eleifend eros a massa venenatis
-                    placerat. Sed rhoncus erat sed dapibus pretium. Curabitur in 
-                    consequat mauris. Vestibulum tincidunt tellus neque, et 
-                    malesuada dui elementum non. Morbi ultricies scelerisque 
-                    lorem id interdum.</p>
-                    <p>Donec nec felis vulputate, sollicitudin nunc nec, ornare 
-                ipsum. Proin a justo blandit, interdum mauris id, molestie </p>
+                <p>{props.instructions}</p>
             </div>
             <div className="recipe-meal-img">
-                <img src={foodImg} alt="foodImage"/>
+                <img src={props.img} alt={props.name}/>
             </div>
             <div className="recipe-link">
-                <Link className="recipe-link-a" to="#" target="_blank">Watch Video</Link>
+                <a href={props.link} className="recipe-link-a" target="_blank" rel="noreferrer">Watch Video</a>
             </div>
             </div>
         </div>
